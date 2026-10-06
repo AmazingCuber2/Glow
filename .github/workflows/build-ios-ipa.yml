@@ -3,14 +3,14 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'GlowNative-iOS-Project-v2.zip'
+      - 'GlowNative-iOS-Project-v3.zip'
 jobs:
   build:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
       - name: Unpack iOS project
-        run: unzip -q GlowNative-iOS-Project-v2.zip -d ios-source
+        run: unzip -q GlowNative-iOS-Project-v3.zip -d ios-source
       - name: Build unsigned iPhone app
         run: xcodebuild -project ios-source/GlowNative/GlowNative.xcodeproj -scheme Glow -configuration Release -sdk iphoneos -derivedDataPath ios-build CODE_SIGNING_ALLOWED=NO build
       - name: Package unsigned IPA
