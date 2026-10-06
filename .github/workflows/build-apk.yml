@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'GlowAndroid-Project.zip'
+      - 'GlowAndroid-Project-v2.zip'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
         with:
           gradle-version: '8.9'
       - name: Unpack Android project
-        run: unzip -q GlowAndroid-Project.zip -d android-source
+        run: unzip -q GlowAndroid-Project-v2.zip -d android-source
       - name: Build debug APK
         run: gradle -p android-source/GlowAndroid-clean-v2 assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
