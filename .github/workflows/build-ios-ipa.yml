@@ -1,0 +1,25 @@
+name: Build iOS IPA
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'GlowNative-iOS-Project.zip'
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack iOS project
+        run: unzip -q GlowNative-iOS-Project.zip -d ios-source
+      - name: Build unsigned iPhone app
+        run: xcodebuild -project ios-source/GlowNative/GlowNative.xcodeproj -scheme Glow -configuration Release -sdk iphoneos -derivedDataPath ios-build CODE_SIGNING_ALLOWED=NO build
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -R ios-build/Build/Products/Release-iphoneos/Glow.app Payload/
+          /usr/bin/ditto -c -k --sequesterRsrc --keepParent Payload Glow-Unsigned.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Glow-iOS-Unsigned-IPA
+          path: Glow-Unsigned.ipa
+          retention-days: 14
