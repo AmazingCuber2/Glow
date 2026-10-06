@@ -22,8 +22,8 @@ jobs:
       - name: Unpack Android project
         run: unzip -q GlowAndroid-Project.zip -d android-source
       - name: Build debug APK
-        run: gradle -p android-source/GlowAndroid-clean assembleDebug --no-daemon
+        run: gradle -p android-source/GlowAndroid-clean-v2 assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: Glow-Android-APK
-          path: android-source/GlowAndroid-clean/app/build/outputs/apk/debug/app-debug.apk
+          path: android-source/GlowAndroid-clean-v2/app/build/outputs/apk/debug/app-debug.apk
